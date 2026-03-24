@@ -1,0 +1,94 @@
+.poll-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 5px 50px 5px 5px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+  min-height: 110px;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &--active {
+    cursor: pointer;
+
+    &:hover, &:focus-visible {
+      background: var(--color-card-hover);
+      border-color: var(--color-primary);
+      box-shadow: 0 6px 24px rgba(53, 39, 58, 0.4);
+      outline: none;
+
+    }
+  }
+
+  &--past { opacity: 0.55; cursor: default; }
+
+  &__category {
+    font-family: 'Mulish', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-primary-light, #FFCFA1);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  &__title {
+    font-family: 'Mulish', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+    line-height: 1.4;
+    flex: 1;
+  }
+
+  &__description {
+    font-family: Mulish, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto;
+    padding-top: 0.5rem;
+  }
+
+  &__badge-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Deadline badge – visible by default */
+  &__deadline-badge {
+    background: var(--color-primary-light);
+    border-radius: 0 14px 0 0;
+    color: var(--color-text-dark);
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 0.25rem 0.8rem;
+    white-space: nowrap;
+
+  }
+
+  &__closed-badge {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    background: var(--color-border);
+    border-radius: 20px;
+    padding: 0.25rem 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}

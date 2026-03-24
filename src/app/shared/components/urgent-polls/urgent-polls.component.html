@@ -1,0 +1,26 @@
+<section class="urgent-polls" aria-labelledby="urgent-heading" *ngIf="polls.length > 0">
+  <h3 id="urgent-heading" class="urgent-polls__title">Ending soon surveys</h3>
+
+  <ul class="urgent-polls__list" role="list" aria-label="Surveys ending soon">
+    <li *ngFor="let poll of polls" class="urgent-polls__item">
+      <article
+        class="urgent-card"
+        role="button"
+        tabindex="0"
+        [attr.aria-label]="'Ending soon: ' + poll.title"
+        (click)="selectPoll(poll)"
+        (keydown.enter)="selectPoll(poll)"
+      >
+        <p class="urgent-card__category" *ngIf="poll.description">
+          {{ poll.description }}
+        </p>
+        <h4 class="urgent-card__title">{{ poll.title }}</h4>
+        <footer class="urgent-card__footer">
+          <span class="urgent-card__badge">
+            {{ getEndsInText(poll.deadline!) }}
+          </span>
+        </footer>
+      </article>
+    </li>
+  </ul>
+</section>

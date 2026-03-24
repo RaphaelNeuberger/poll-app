@@ -1,0 +1,105 @@
+<main class="pd-page">
+
+  <div class="pd-state" *ngIf="pollService.isLoading()">
+    <span class="spinner" aria-hidden="true"></span>
+    <p>Loading survey...</p>
+  </div>
+
+  <div class="pd-state" *ngIf="!poll() && !pollService.isLoading()">
+    <h2>Survey not found</h2>
+    <p>This survey may have been removed.</p>
+    <button class="pd-btn-back" type="button" (click)="goBack()">&#8592; Go to Home</button>
+  </div>
+
+  <div class="pd-card" *ngIf="poll() && !pollService.isLoading()">
+
+    <section class="pd-survey">
+
+      <span class="pd-badge">Published</span>
+
+      <div class="pd-meta">
+        <span class="pd-meta__item">Ends on {{ getDeadlineText() }}</span>
+        <span class="pd-meta__item" *ngIf="poll()!.category">Category: {{ poll()!.category }}</span>
+      </div>
+
+      <h1 class="pd-title">{{ poll()!.title }}</h1>
+
+      <p class="pd-description" *ngIf="poll()!.description">{{ poll()!.description }}</p>
+
+      <div class="pd-question">
+        <header class="pd-question__header">
+          <h2 class="pd-question__title">1. {{ poll()!.title }}</h2>
+          <p class="pd-question__hint">More than one answers are possible.</p>
+        </header>
+        <ul class="pd-options" role="list">
+          <li *ngFor="let option of poll()!.options; let i = index">
+            <button
+              class="pd-option"
+              type="button"
+              [class.pd-option--selected]="votedOptionId() === option.id"
+              [class.pd-option--voted]="hasVoted()"
+              [disabled]="hasVoted() || isVoting() || isPollPast()"
+              [attr.aria-pressed]="votedOptionId() === option.id"
+              [attr.aria-label]="'Vote for: ' + option.text"
+              (click)="castVote(option.id)"
+            >
+              <span
+                class="pd-option__checkbox"
+                [class.pd-option__checkbox--checked]="votedOptionId() === option.id"
+                aria-hidden="true"
+              ></span>
+              <span class="pd-option__text">
+                <strong>{{ getOptionLetter(i) }}.</strong>&nbsp;{{ option.text }}
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <footer class="pd-survey__footer">
+        <p class="pd-voted-hint" *ngIf="hasVoted()">Your vote was counted &#10003;</p>
+        <p class="pd-voted-hint" *ngIf="isPollPast() && !hasVoted()">This survey has ended.</p>
+        <p class="pd-voting-note" *ngIf="isVoting()">Submitting your vote...</p>
+        <button class="pd-submit" type="button" (click)="goBack()">Complete survey</button>
+      </footer>
+
+    </section>
+
+    <aside class="pd-results" aria-live="polite" aria-atomic="false">
+
+      <h2 class="pd-results__heading">
+        Survey results <span class="pd-results__live">LIVE</span>
+      </h2>
+
+      <ng-container *ngIf="getTotalVotes() === 0">
+        <p class="pd-results__lead">
+          Results will be shown here after participants complete the survey.
+        </p>
+        <p class="pd-results__empty">There are no answers yet.</p>
+      </ng-container>
+
+      <div class="pd-result-group" *ngIf="getTotalVotes() > 0">
+        <h3 class="pd-result-group__title">1. {{ poll()!.title }}</h3>
+        <ul class="pd-bars" role="list">
+          <li *ngFor="let option of poll()!.options; let i = index" class="pd-bar-row">
+            <span class="pd-bar-row__letter">{{ getOptionLetter(i) }}</span>
+            <div
+              class="pd-bar-track"
+              role="progressbar"
+              [attr.aria-valuenow]="getOptionPercentage(option)"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              [attr.aria-label]="option.text + ': ' + getOptionPercentage(option) + '%'"
+            >
+              <div class="pd-bar-fill" [style.width.%]="getOptionPercentage(option)"></div>
+            </div>
+            <span class="pd-bar-row__pct">{{ getOptionPercentage(option) }}%</span>
+          </li>
+        </ul>
+      </div>
+
+    </aside>
+
+  </div>
+
+</main>

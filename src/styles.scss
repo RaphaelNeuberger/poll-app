@@ -1,0 +1,191 @@
+/* ==========================================================================
+   Custom Fonts
+   ========================================================================== */
+
+/* Nerko One */
+@font-face {
+  font-family: 'Nerko One';
+  src: url('/fonts/nerko-one-v17-latin/nerko-one-v17-latin-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Mulish */
+@font-face { font-family: 'Mulish'; src: url('/fonts/mulish-v18-latin/mulish-v18-latin-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Mulish'; src: url('/fonts/mulish-v18-latin/mulish-v18-latin-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Mulish'; src: url('/fonts/mulish-v18-latin/mulish-v18-latin-200.woff2') format('woff2'); font-weight: 200; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Mulish'; src: url('/fonts/mulish-v18-latin/mulish-v18-latin-200italic.woff2') format('woff2'); font-weight: 200; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Mulish'; src: url('/fonts/mulish-v18-latin/mulish-v18-latin-300.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Mulish'; src: url('/fonts/mulish-v18-latin/mulish-v18-latin-300italic.woff2') format('woff2'); font-weight: 300; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Mulish'; src: url('/fonts/mulish-v18-latin/mulish-v18-latin-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Mulish'; src: url('/fonts/mulish-v18-latin/mulish-v18-latin-500italic.woff2') format('woff2'); font-weight: 500; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Mulish'; src: url('/fonts/mulish-v18-latin/mulish-v18-latin-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Mulish'; src: url('/fonts/mulish-v18-latin/mulish-v18-latin-600italic.woff2') format('woff2'); font-weight: 600; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Mulish'; src: url('/fonts/mulish-v18-latin/mulish-v18-latin-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Mulish'; src: url('/fonts/mulish-v18-latin/mulish-v18-latin-700italic.woff2') format('woff2'); font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Mulish'; src: url('/fonts/mulish-v18-latin/mulish-v18-latin-800.woff2') format('woff2'); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Mulish'; src: url('/fonts/mulish-v18-latin/mulish-v18-latin-800italic.woff2') format('woff2'); font-weight: 800; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Mulish'; src: url('/fonts/mulish-v18-latin/mulish-v18-latin-900.woff2') format('woff2'); font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Mulish'; src: url('/fonts/mulish-v18-latin/mulish-v18-latin-900italic.woff2') format('woff2'); font-weight: 900; font-style: italic; font-display: swap; }
+
+/* Nokora */
+@font-face { font-family: 'Nokora'; src: url('/fonts/nokora-v34-latin/nokora-v34-latin-100.woff2') format('woff2'); font-weight: 100; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Nokora'; src: url('/fonts/nokora-v34-latin/nokora-v34-latin-200.woff2') format('woff2'); font-weight: 200; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Nokora'; src: url('/fonts/nokora-v34-latin/nokora-v34-latin-300.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Nokora'; src: url('/fonts/nokora-v34-latin/nokora-v34-latin-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Nokora'; src: url('/fonts/nokora-v34-latin/nokora-v34-latin-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Nokora'; src: url('/fonts/nokora-v34-latin/nokora-v34-latin-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Nokora'; src: url('/fonts/nokora-v34-latin/nokora-v34-latin-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Nokora'; src: url('/fonts/nokora-v34-latin/nokora-v34-latin-800.woff2') format('woff2'); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Nokora'; src: url('/fonts/nokora-v34-latin/nokora-v34-latin-900.woff2') format('woff2'); font-weight: 900; font-style: normal; font-display: swap; }
+
+/* ==========================================================================
+   PollApp – Global Styles
+   Design: Dark plum background with light-orange accent (matches Figma)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CSS Custom Properties (Design Tokens)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Background layers – dark plum */
+  --color-bg:               #35273A;
+  --color-surface:          #221227;
+  --color-surface-elevated: #2E1A34;
+  --color-surface-light:    #FAF5FE;
+
+  /* Border */
+  --color-border:           #4A2E52;
+  --color-border-hover:     #6A4472;
+
+  /* Primary accent – orange/peach */
+  --color-primary:          #FFB770;
+  --color-primary-hover:    #F59E0B;
+  --color-primary-light:    #FFCFA1;
+  --color-primary-glow:     rgba(255, 183, 112, 0.30);
+
+  /* Tab colors */
+  --color-tab-active:       #FFB770;
+  --color-tab-inactive:     #FEE9D4;
+  --color-tab-text-active:  #290657;
+  --color-tab-text-inactive:#6B4A7A;
+
+  /* Text */
+  --color-text-primary:     #FFFFFF;
+  --color-text-secondary:   #D4C4DC;
+  --color-text-muted:       #9B7AAB;
+  --color-text-dark:        #290657;
+
+  /* Semantic */
+  --color-warning:          #FFB770;
+  --color-error:            #EF4444;
+  --color-success:          #22C55E;
+
+  /* Card */
+  --color-card:             rgba(217, 217, 217, 0.08);
+  --color-card-hover:       rgba(217, 217, 217, 0.14);
+  --color-card-light:       #FAF5FE;
+}
+
+/* --------------------------------------------------------------------------
+   CSS Reset & Box Model
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Base HTML elements
+   -------------------------------------------------------------------------- */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --------------------------------------------------------------------------
+   Typography
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-text-primary);
+}
+
+p {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Focus styles (accessibility)
+   -------------------------------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Scrollbar styling
+   -------------------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 3px;
+
+  &:hover {
+    background: var(--color-primary-hover);
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--color-bg);
+}
+
+/* --------------------------------------------------------------------------
+   Utility: visually hidden (for screen readers)
+   -------------------------------------------------------------------------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

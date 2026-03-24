@@ -1,0 +1,84 @@
+.urgent-polls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__title {
+    font-family: 'Mulish', sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  &__list {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    padding-bottom: 0.75rem;
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) transparent;
+  }
+
+  &__item { flex-shrink: 0; }
+}
+
+/* White/lavender card – category, title, deadline badge */
+.urgent-card {
+  background: var(--color-card-light);
+  border: none;
+  border-radius: 0 80px 0 0;
+  padding: 1.25rem 1.25rem 1rem;
+  width: 240px;
+  min-height: 210px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover, &:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(53, 39, 58, 0.35);
+    outline: none;
+  }
+
+  &__category {
+    font-family: 'Mulish', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #35273A;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  &__title {
+    font-family: 'Mulish', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #35273A;
+    margin: 0;
+    line-height: 1.4;
+    flex: 1;
+  }
+
+  &__footer {
+    margin-top: auto;
+    padding-top: 0.75rem;
+  }
+
+  /* Deadline pill badge at bottom-left */
+  &__badge {
+    display: inline-block;
+    background: var(--color-primary-light);
+    border-radius: 0 14px 0 0;
+    color: var(--color-bg);
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.25rem 0.75rem;
+  }
+}

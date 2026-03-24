@@ -1,0 +1,143 @@
+<div class="home-wrapper">
+
+  <section class="hero">
+    <div class="hero__content">
+      <h1 class="hero__heading">Collect Feedback,<br>Unlock Ideas</h1>
+      <p class="hero__subtitle">
+        Create and share surveys in minutes &ndash; from team events to workplace culture.
+        Collect opinions, engage your audience, and turn feedback into action.
+      </p>
+      <button class="hero__cta" type="button" (click)="openCreateModal()">
+        New survey
+      </button>
+    </div>
+
+    <div class="hero__illustration" aria-hidden="true">
+      <img class="hero__phone" src="/tablet.png" alt="">
+      <img class="hero__asset hero__asset--bubble" src="/asset-bubble.svg" alt="">
+      <img class="hero__asset hero__asset--check" src="/asset-check.svg" alt="">
+    </div>
+  </section>
+
+  <!-- Surveys section -->
+  <section class="surveys" aria-labelledby="surveys-heading">
+
+    <h2 id="surveys-heading" class="surveys__heading">Your surveys</h2>
+
+    <app-urgent-polls
+      [polls]="pollService.getUrgentPolls()"
+      (pollSelected)="navigateToPoll($event)"
+    ></app-urgent-polls>
+
+    @if (pollService.isLoading()) {
+      <div class="surveys__loading" aria-live="polite">
+        <span class="spinner" aria-hidden="true"></span>
+        <p>Loading surveys&hellip;</p>
+      </div>
+    }
+
+    @if (pollService.error() && !pollService.isLoading()) {
+      <div class="surveys__error" role="alert">
+        <p>&#9888; {{ pollService.error() }}</p>
+      </div>
+    }
+
+    @if (!pollService.isLoading()) {
+      <div class="surveys__body">
+
+        <div class="surveys__controls">
+          <nav class="surveys__tabs" role="tablist" aria-label="Survey categories">
+            <button
+              class="surveys__tab"
+              role="tab"
+              [class.surveys__tab--active]="activeTab() === 'active'"
+              [attr.aria-selected]="activeTab() === 'active'"
+              type="button"
+              (click)="switchTab('active')"
+            >
+              Active survey
+            </button>
+            <button
+              class="surveys__tab"
+              role="tab"
+              [class.surveys__tab--active]="activeTab() === 'past'"
+              [attr.aria-selected]="activeTab() === 'past'"
+              type="button"
+              (click)="switchTab('past')"
+            >
+              Past survey
+            </button>
+          </nav>
+          <div class="surveys__sort">
+          <div class="sort-dropdown">
+            <button class="sort-dropdown__btn" type="button" (click)="toggleCategoryMenu()">
+              Sort by categories
+              <span class="sort-dropdown__arrow">{{ showCategoryMenu() ? '&#9650;' : '&#9660;' }}</span>
+            </button>
+            @if (selectedCategory()) {
+              <span class="sort-dropdown__selected">{{ selectedCategory() }}</span>
+            }
+            @if (showCategoryMenu()) {
+              <ul class="sort-dropdown__list">
+                <li><button class="sort-dropdown__item" type="button" (click)="selectCategory(null)">All categories</button></li>
+                @for (cat of categories; track cat) {
+                  <li><button class="sort-dropdown__item" [class.sort-dropdown__item--active]="selectedCategory() === cat" type="button" (click)="selectCategory(cat)">{{ cat }}</button></li>
+                }
+              </ul>
+            }
+          </div>
+        </div>
+        </div>
+
+        @if (getDisplayedPolls().length === 0) {
+          <div class="surveys__empty">
+            @if (activeTab() === 'active') {
+              <p class="surveys__empty-text">No active surveys yet. Create your first one!</p>
+            }
+            @if (activeTab() === 'past') {
+              <p class="surveys__empty-text">No past surveys found.</p>
+            }
+          </div>
+        }
+
+        @if (getDisplayedPolls().length > 0) {
+          <ul class="polls-grid" role="list" aria-label="Surveys">
+            @for (poll of getDisplayedPolls(); track poll.id) {
+              <li>
+                <app-poll-card
+                  [poll]="poll"
+                  [isActive]="activeTab() === 'active'"
+                  (cardClicked)="navigateToPoll($event)"
+                ></app-poll-card>
+              </li>
+            }
+          </ul>
+        }
+
+      </div>
+    }
+  </section>
+
+</div>
+
+<!-- Success overlay -->
+@if (showSuccessOverlay()) {
+  <div class="success-overlay" (click)="closeSuccessOverlay()">
+    <div class="success-overlay__box">
+      <div class="success-overlay__row">
+        <p class="success-overlay__text">Your survey was created successfully!</p>
+        <button class="success-overlay__close" type="button" (click)="closeSuccessOverlay()" aria-label="Close">
+          <img src="close.png" alt="close" style="width:24px;height:24px;">
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Create poll modal dialog -->
+@if (showCreateModal()) {
+  <app-create-poll-modal
+    (closed)="closeCreateModal()"
+    (pollCreated)="onPollCreated($event)"
+  ></app-create-poll-modal>
+}
