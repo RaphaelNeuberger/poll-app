@@ -35,6 +35,7 @@
           },
           "configurations": {
             "production": {
+              "styles": ["src/styles.prod.scss"],
               "budgets": [
                 {
                   "type": "initial",

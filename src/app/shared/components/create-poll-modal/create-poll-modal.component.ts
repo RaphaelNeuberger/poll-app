@@ -1,6 +1,7 @@
-import { Component, Output, EventEmitter, signal } from '@angular/core';
+import { Component, Output, EventEmitter, signal, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { PollService } from '../../../core/services/poll.service';
 import { CreatePollData } from '../../../core/models/poll.model';
 
@@ -13,11 +14,11 @@ interface QuestionDraft {
 @Component({
   selector: 'app-create-poll-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './create-poll-modal.component.html',
   styleUrl: './create-poll-modal.component.scss',
 })
-export class CreatePollModalComponent {
+export class CreatePollModalComponent implements OnInit, OnDestroy {
   @Output() closed = new EventEmitter<void>();
   @Output() pollCreated = new EventEmitter<string>();
 
@@ -35,6 +36,14 @@ export class CreatePollModalComponent {
   errorMessage = signal<string | null>(null);
 
   constructor(private readonly pollService: PollService) {}
+
+  ngOnInit(): void {
+    document.body.style.overflow = 'hidden';
+  }
+
+  ngOnDestroy(): void {
+    document.body.style.overflow = '';
+  }
 
   /** Appends a new empty question with two default answer slots. */
   addQuestion(): void {
