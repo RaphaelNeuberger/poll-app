@@ -6,12 +6,14 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 1.5rem;
+  padding: 80px 1.5rem 1.5rem;
   animation: fadeIn 0.2s ease;
 
   @media (max-width: 640px) {
-    padding: 80px 0 0;
     align-items: flex-start;
+    justify-content: flex-start;
+    padding: 76px 0 2rem;
+    overflow-y: auto;
   }
 
   &__nav {
@@ -27,7 +29,7 @@
   &__nav-inner {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem 0 0;
+    padding: 0 2rem;
 
     @media (max-width: 640px) {
       padding: 0 1.25rem;
@@ -48,8 +50,7 @@
   width: 100%;
   max-width: 880px;
   max-height: 92vh;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden auto;
   padding: 0;
   position: relative;
   margin: auto;
@@ -100,7 +101,13 @@
     padding: 0.5rem 1.25rem;
     white-space: nowrap;
     transition: background 0.15s;
+    display: flex;
+    align-items: center;
     &:hover { background: #6D547A; }
+  }
+
+  &__cancel-label {
+    @media (max-width: 640px) { display: none; }
   }
 
   &__card {
@@ -142,7 +149,7 @@
   }
   @media (max-width: 640px) {
     border-radius: 5px 60px 5px 5px;
-    max-height: 100vh;
+    max-height: none;
     width: 100%;
     max-width: 100%;
 
@@ -388,18 +395,18 @@
 
 .publish-btn {
   @media (max-width: 640px) { width: 100%; justify-content: center; display: flex; align-items: center; gap: 0.5rem; }
-  background: #F5A623;
+  background: #FFCFA1;
   border: none;
   border-radius: 8px;
   color: #35273A;
   font-family: Mulish, sans-serif;
   font-size: 1rem;
   font-weight: 700;
-  cursor: pointer;
+  cursor: not-allowed;
   padding: 0.7rem 2.5rem;
   transition: background 0.15s;
-  &:not(:disabled):hover { background: #e8971a; }
-  &:disabled { opacity: 0.45; cursor: not-allowed; }
+  &:not(:disabled) { background: #FFB770; cursor: pointer; }
+  &:not(:disabled):hover { background: #e8a050; }
 }
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

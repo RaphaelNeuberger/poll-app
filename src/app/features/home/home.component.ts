@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   readonly categories = ['Team Activities', 'Health & Wellness', 'Gaming & Entertainment', 'Education & Learning', 'Lifestyle & Preferences', 'Technology & Innovation'];
   readonly showCreateModal = signal(false);
   readonly isIllustrationHovered = signal(false);
+  readonly isCtaHovered = signal(false);
   readonly showSuccessOverlay = signal(false);
   createdPollId: string | null = null;
 

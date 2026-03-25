@@ -18,7 +18,8 @@
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     padding: 2rem 1rem 3rem;
-    align-items: start;
+    align-items: center;
+    text-align: center;
     gap: 1.25rem;
   }
 
@@ -67,11 +68,23 @@
     font-weight: 700;
     padding: 0.65rem 1.5rem;
     width: fit-content;
-    transition: opacity 0.15s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.15s ease;
 
-    &:hover { opacity: 0.85; }
+    &--hovered {
+      background: #FFB770;
+    }
 
     @media (max-width: 768px) { order: 4; align-self: center; }
+  }
+
+  &__cta-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    display: block;
   }
 
   /* --- CSS-only phone illustration --- */
@@ -227,7 +240,7 @@
 
 .polls-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
   list-style: none;
   margin: 0;

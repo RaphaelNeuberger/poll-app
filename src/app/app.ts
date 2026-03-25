@@ -24,12 +24,26 @@ import { CreatePollModalComponent } from './shared/components/create-poll-modal/
         (pollCreated)="onPollCreated($event)"
       ></app-create-poll-modal>
     }
+    @if (showSuccessOverlay()) {
+      <div class="success-overlay" (click)="closeSuccessOverlay()">
+        <div class="success-overlay__box" (click)="$event.stopPropagation()">
+          <div class="success-overlay__row">
+            <p class="success-overlay__text">Your survey was created successfully!</p>
+            <button class="success-overlay__close" type="button" (click)="closeSuccessOverlay()" aria-label="Close">
+              <img src="close.png" alt="close" style="width:24px;height:24px;">
+            </button>
+          </div>
+        </div>
+      </div>
+    }
   `,
   styleUrl: './app.scss',
 })
 export class App {
   readonly isLightPage = signal(false);
   readonly showModal = signal(false);
+  readonly showSuccessOverlay = signal(false);
+  private createdPollId: string | null = null;
 
   constructor(private readonly router: Router) {
     this.router.events.pipe(
@@ -41,6 +55,14 @@ export class App {
 
   onPollCreated(pollId: string): void {
     this.showModal.set(false);
-    this.router.navigate(['/poll', pollId]);
+    this.createdPollId = pollId;
+    this.showSuccessOverlay.set(true);
+  }
+
+  closeSuccessOverlay(): void {
+    this.showSuccessOverlay.set(false);
+    if (this.createdPollId) {
+      this.router.navigate(['/poll', this.createdPollId]);
+    }
   }
 }

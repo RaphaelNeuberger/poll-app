@@ -66,10 +66,12 @@ export class CreatePollModalComponent implements OnInit, OnDestroy {
     this.questions[questionIndex].options.push('');
   }
 
-  /** Removes an answer option; minimum of two options is enforced. */
+  /** Removes an answer option or clears it if only two remain. */
   removeOption(questionIndex: number, optionIndex: number): void {
     if (this.questions[questionIndex].options.length > 2) {
       this.questions[questionIndex].options.splice(optionIndex, 1);
+    } else {
+      this.questions[questionIndex].options[optionIndex] = '';
     }
   }
 
@@ -84,12 +86,11 @@ export class CreatePollModalComponent implements OnInit, OnDestroy {
     this.showCategories = false;
   }
 
-  /** Title, description and at least two non-empty options are required. */
+  /** Title and at least two non-empty options are required. Description is optional. */
   isFormValid(): boolean {
     const hasTitle = this.title.trim().length > 0;
-    const hasDescription = this.description.trim().length > 0;
     const validOptions = this.questions[0].options.filter(o => o.trim().length > 0);
-    return hasTitle && hasDescription && validOptions.length >= 2;
+    return hasTitle && validOptions.length >= 2;
   }
 
   /** Validates, builds the payload and delegates to the poll service. */

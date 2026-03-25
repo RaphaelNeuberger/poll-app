@@ -70,7 +70,7 @@ export class PollService {
     const rows = options.map((text) => ({ poll_id: pollId, text, vote_count: 0 }));
     await this.supabase.from('options').insert(rows);
   }
-  /** Inserts the vote record and increments the option count via RPC. */
+  /** Inserts the vote record, increments the option count via RPC and updates local state directly. */
   async vote(pollId: string, optionId: string): Promise<boolean> {
     const voterId = this.getVoterId();
     const { error: voteError } = await this.supabase
@@ -80,22 +80,23 @@ export class PollService {
     if (voteError) return false;
 
     await this.supabase.rpc('increment_vote_count', { option_id_param: optionId });
-    await this.loadPolls();
+
+    // Update local state directly instead of reloading all polls
+    this.polls.update(polls =>
+      polls.map(poll => {
+        if (poll.id !== pollId) return poll;
+        return {
+          ...poll,
+          options: poll.options.map((opt: PollOption) =>
+            opt.id === optionId ? { ...opt, vote_count: opt.vote_count + 1 } : opt
+          )
+        };
+      })
+    );
+
     return true;
   }
-  /** Checks by voter ID (stored in localStorage) whether this user already voted. */
-  async hasVoted(pollId: string): Promise<boolean> {
-    const voterId = this.getVoterId();
-    const { data } = await this.supabase
-      .from('votes')
-      .select('id')
-      .eq('poll_id', pollId)
-      .eq('voter_identifier', voterId)
-      .maybeSingle();
-
-    return data !== null;
-  }
-  /** Returns the option ID the user voted for, or null if not voted yet. */
+  /** Returns the option ID the user voted for (null = not voted). Single DB call covers both hasVoted and getVotedOption. */
   async getVotedOption(pollId: string): Promise<string | null> {
     const voterId = this.getVoterId();
     const { data } = await this.supabase
@@ -106,6 +107,10 @@ export class PollService {
       .maybeSingle();
 
     return data?.option_id ?? null;
+  }
+  /** @deprecated Use getVotedOption instead – returns null when not voted. */
+  async hasVoted(pollId: string): Promise<boolean> {
+    return (await this.getVotedOption(pollId)) !== null;
   }
   /** Subscribes to live vote inserts via Supabase Realtime. Returns an unsubscribe function. */
   subscribeToVotes(pollId: string, onUpdate: () => void): () => void {

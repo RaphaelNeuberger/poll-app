@@ -7,8 +7,16 @@
         Create and share surveys in minutes &ndash; from team events to workplace culture.
         Collect opinions, engage your audience, and turn feedback into action.
       </p>
-      <button class="hero__cta" type="button" (click)="openCreateModal()">
+      <button class="hero__cta"
+              [class.hero__cta--hovered]="isCtaHovered()"
+              type="button"
+              (mouseenter)="isCtaHovered.set(true)"
+              (mouseleave)="isCtaHovered.set(false)"
+              (click)="openCreateModal()">
         New survey
+        @if (isCtaHovered()) {
+          <img class="hero__cta-icon" src="add_circle_dark.svg" alt="" aria-hidden="true" width="20" height="20">
+        }
       </button>
     </div>
 

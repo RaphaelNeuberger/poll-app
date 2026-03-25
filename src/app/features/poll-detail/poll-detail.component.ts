@@ -30,8 +30,7 @@ export class PollDetailComponent implements OnInit, OnDestroy {
       this.router.navigate(['/']);
       return;
     }
-    await this.loadPollData(pollId);
-    await this.checkVoteStatus(pollId);
+    await Promise.all([this.loadPollData(pollId), this.checkVoteStatus(pollId)]);
     this.subscribeToUpdates(pollId);
   }
 
@@ -57,7 +56,7 @@ export class PollDetailComponent implements OnInit, OnDestroy {
     if (success) {
       this.hasVoted.set(true);
       this.votedOptionId.set(optionId);
-      await this.loadPollData(pollId);
+      this.poll.set(this.pollService.polls().find(p => p.id === pollId) ?? this.poll());
     }
     this.isVoting.set(false);
   }
@@ -89,14 +88,11 @@ export class PollDetailComponent implements OnInit, OnDestroy {
     const found = this.pollService.polls().find((p) => p.id === pollId) ?? null;
     this.poll.set(found);
   }
-  /** Restores the voted state on page load so returning users see their choice. */
+  /** Restores the voted state on page load – single DB call via getVotedOption. */
   private async checkVoteStatus(pollId: string): Promise<void> {
-    const voted = await this.pollService.hasVoted(pollId);
-    this.hasVoted.set(voted);
-    if (voted) {
-      const optionId = await this.pollService.getVotedOption(pollId);
-      this.votedOptionId.set(optionId);
-    }
+    const optionId = await this.pollService.getVotedOption(pollId);
+    this.hasVoted.set(optionId !== null);
+    this.votedOptionId.set(optionId);
   }
   /** Wires up realtime updates so results refresh without a page reload. */
   private subscribeToUpdates(pollId: string): void {
