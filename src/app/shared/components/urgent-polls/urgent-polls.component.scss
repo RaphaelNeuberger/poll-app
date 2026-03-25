@@ -38,11 +38,10 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: background 0.15s;
 
   &:hover, &:focus-visible {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(53, 39, 58, 0.35);
+    background: #F4E9FB;
     outline: none;
   }
 
