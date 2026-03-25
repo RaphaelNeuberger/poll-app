@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   readonly showCategoryMenu = signal(false);
   readonly categories = ['Team Activities', 'Health & Wellness', 'Gaming & Entertainment', 'Education & Learning', 'Lifestyle & Preferences', 'Technology & Innovation'];
   readonly showCreateModal = signal(false);
+  readonly isIllustrationHovered = signal(false);
   readonly showSuccessOverlay = signal(false);
   createdPollId: string | null = null;
 

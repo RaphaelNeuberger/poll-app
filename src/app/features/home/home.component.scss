@@ -123,19 +123,6 @@
     }
   }
 
-  /* Hover: swap all images when hovering the illustration */
-  &__illustration:hover &__phone {
-    content: url('/tablet-hover.png');
-  }
-
-  &__illustration:hover &__asset--bubble {
-    content: url('/asset-bubble-hover.svg');
-  }
-
-  &__illustration:hover &__asset--check {
-    content: url('/asset-check-hover.svg');
-  }
-
 }
 
 /* ==========================================================================

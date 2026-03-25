@@ -12,10 +12,12 @@
       </button>
     </div>
 
-    <div class="hero__illustration" aria-hidden="true">
-      <img class="hero__phone" src="tablet.png" alt="">
-      <img class="hero__asset hero__asset--bubble" src="asset-bubble.svg" alt="">
-      <img class="hero__asset hero__asset--check" src="asset-check.svg" alt="">
+    <div class="hero__illustration" aria-hidden="true"
+         (mouseenter)="isIllustrationHovered.set(true)"
+         (mouseleave)="isIllustrationHovered.set(false)">
+      <img class="hero__phone" [src]="isIllustrationHovered() ? 'tablet-hover.png' : 'tablet.png'" alt="" loading="eager">
+      <img class="hero__asset hero__asset--bubble" [src]="isIllustrationHovered() ? 'asset-bubble-hover.svg' : 'asset-bubble.svg'" alt="" loading="eager">
+      <img class="hero__asset hero__asset--check" [src]="isIllustrationHovered() ? 'asset-check-hover.svg' : 'asset-check.svg'" alt="" loading="eager">
     </div>
   </section>
 
