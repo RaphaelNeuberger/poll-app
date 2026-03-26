@@ -36,6 +36,8 @@ export class CreatePollModalComponent {
   ];
   isSubmitting = signal(false);
   errorMessage = signal<string | null>(null);
+  showSuccess = signal(false);
+  private createdPollId: string | null = null;
 
   constructor(private readonly pollService: PollService, private readonly router: Router) {}
 
@@ -112,12 +114,17 @@ export class CreatePollModalComponent {
     const result = await this.pollService.createPoll(data);
 
     if (result) {
-      this.router.navigate(['/poll', result.id]);
+      this.createdPollId = result.id;
+      this.showSuccess.set(true);
     } else {
       this.errorMessage.set('Failed to create poll. Please try again.');
     }
 
     this.isSubmitting.set(false);
+  }
+
+  closeSuccessOverlay(): void {
+    this.router.navigate(['/poll', this.createdPollId]);
   }
 
   /** Navigates back to the home page. */

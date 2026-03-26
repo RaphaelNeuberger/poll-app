@@ -153,3 +153,16 @@
     </form>
   </dialog>
 </div>
+
+@if (showSuccess()) {
+  <div class="success-overlay" (click)="closeSuccessOverlay()">
+    <div class="success-overlay__box" (click)="$event.stopPropagation()">
+      <div class="success-overlay__row">
+        <p class="success-overlay__text">Your survey was created successfully!</p>
+        <button class="success-overlay__close" type="button" (click)="closeSuccessOverlay()" aria-label="Close">
+          <img src="close.png" alt="close" class="success-overlay__close-icon">
+        </button>
+      </div>
+    </div>
+  </div>
+}
