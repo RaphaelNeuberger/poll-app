@@ -26,7 +26,11 @@ export class CreatePollModalComponent {
   description = '';
   deadline = '';
   category = '';
-  readonly minDeadline = new Date().toISOString().slice(0, 16);
+  get minDeadline(): string {
+    const now = new Date();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  }
   showCategories = false;
   readonly categories = ['Team Activities', 'Health & Wellness', 'Gaming & Entertainment', 'Education & Learning', 'Lifestyle & Preferences', 'Technology & Innovation'];
 
@@ -79,12 +83,19 @@ export class CreatePollModalComponent {
     this.showCategories = false;
   }
 
+  /** Returns list of validation issues for display. */
+  validationHints(): string[] {
+    const hints: string[] = [];
+    if (!this.title.trim()) hints.push('Survey name is required.');
+    const validOptions = this.questions[0].options.filter(o => o.trim().length > 0);
+    if (validOptions.length < 2) hints.push('At least 2 answers are required.');
+    if (this.deadline && new Date(this.deadline) <= new Date()) hints.push('Deadline must be in the future.');
+    return hints;
+  }
+
   /** Title and at least two non-empty options are required. Deadline must not be in the past. */
   isFormValid(): boolean {
-    const hasTitle = this.title.trim().length > 0;
-    const validOptions = this.questions[0].options.filter(o => o.trim().length > 0);
-    const deadlineValid = !this.deadline || new Date(this.deadline) > new Date();
-    return hasTitle && validOptions.length >= 2 && deadlineValid;
+    return this.validationHints().length === 0;
   }
 
   /** Validates, builds the payload and delegates to the poll service. */

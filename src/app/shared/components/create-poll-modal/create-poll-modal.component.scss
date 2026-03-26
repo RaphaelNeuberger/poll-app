@@ -297,6 +297,7 @@
   transition: color 0.15s;
   &:hover { color: #ffffff; }
   &--top { align-self: flex-start; margin-top: 4px; }
+  img { width: 15px; height: 15px; vertical-align: middle; }
 }
 
 .question {
@@ -370,6 +371,7 @@
   padding: 0.2rem 0;
   align-self: flex-start;
   &:hover { color: #F5A623; }
+  img { width: 18px; height: 18px; vertical-align: middle; }
 }
 
 .add-question-btn {
@@ -388,6 +390,17 @@
   gap: 0.4rem;
   transition: background 0.15s;
   &:hover { background: #6D547A; }
+  img { width: 18px; height: 18px; vertical-align: middle; }
+}
+
+.modal__hints {
+  color: #ffffff;
+  font-family: Mulish, sans-serif;
+  font-size: 0.875rem;
+  margin: 0 0 0.75rem 0;
+  padding-left: 1.25rem;
+  list-style: disc;
+  li { color: #ffffff; margin-bottom: 0.25rem; }
 }
 
 .publish-btn {
