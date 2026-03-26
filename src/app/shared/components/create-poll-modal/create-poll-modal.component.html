@@ -41,7 +41,7 @@
                 <label class="field__label" for="poll-deadline">Set end date <span class="field__opt">(optional)</span></label>
                 <div class="field__row">
                   <input id="poll-deadline" class="field__input field__input--date" type="datetime-local"
-                    [(ngModel)]="deadline" name="deadline" />
+                    [(ngModel)]="deadline" name="deadline" [min]="minDeadline" />
                   <button class="icon-btn" type="button" (click)="deadline = ''" aria-label="Clear deadline">
                     <img src="delete.svg" alt="delete" style="width:15px;height:15px;vertical-align:middle;">
                   </button>

@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, signal, OnInit, OnDestroy } from '@angular/core';
+import { Component, Output, EventEmitter, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -18,7 +18,7 @@ interface QuestionDraft {
   templateUrl: './create-poll-modal.component.html',
   styleUrl: './create-poll-modal.component.scss',
 })
-export class CreatePollModalComponent implements OnInit, OnDestroy {
+export class CreatePollModalComponent {
   @Output() closed = new EventEmitter<void>();
   @Output() pollCreated = new EventEmitter<string>();
 
@@ -26,6 +26,7 @@ export class CreatePollModalComponent implements OnInit, OnDestroy {
   description = '';
   deadline = '';
   category = '';
+  readonly minDeadline = new Date().toISOString().slice(0, 16);
   showCategories = false;
   readonly categories = ['Team Activities', 'Health & Wellness', 'Gaming & Entertainment', 'Education & Learning', 'Lifestyle & Preferences', 'Technology & Innovation'];
 
@@ -36,14 +37,6 @@ export class CreatePollModalComponent implements OnInit, OnDestroy {
   errorMessage = signal<string | null>(null);
 
   constructor(private readonly pollService: PollService) {}
-
-  ngOnInit(): void {
-    document.body.style.overflow = 'hidden';
-  }
-
-  ngOnDestroy(): void {
-    document.body.style.overflow = '';
-  }
 
   /** Appends a new empty question with two default answer slots. */
   addQuestion(): void {
@@ -86,11 +79,12 @@ export class CreatePollModalComponent implements OnInit, OnDestroy {
     this.showCategories = false;
   }
 
-  /** Title and at least two non-empty options are required. Description is optional. */
+  /** Title and at least two non-empty options are required. Deadline must not be in the past. */
   isFormValid(): boolean {
     const hasTitle = this.title.trim().length > 0;
     const validOptions = this.questions[0].options.filter(o => o.trim().length > 0);
-    return hasTitle && validOptions.length >= 2;
+    const deadlineValid = !this.deadline || new Date(this.deadline) > new Date();
+    return hasTitle && validOptions.length >= 2 && deadlineValid;
   }
 
   /** Validates, builds the payload and delegates to the poll service. */

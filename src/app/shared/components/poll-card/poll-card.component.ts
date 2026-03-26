@@ -25,7 +25,9 @@ export class PollCardComponent {
   /** Rounds up to the nearest day so "Ending today" shows for anything under 24 h. */
   getEndsInText(): string {
     if (!this.poll.deadline) return '';
-    const diff = new Date(this.poll.deadline).getTime() - Date.now();
+    const date = new Date(this.poll.deadline);
+    if (isNaN(date.getTime())) return '';
+    const diff = date.getTime() - Date.now();
     const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
     if (days <= 0) return 'Ending today';
     return `Ends in ${days} ${days === 1 ? 'Day' : 'Days'}`;

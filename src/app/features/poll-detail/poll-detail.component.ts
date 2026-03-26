@@ -78,7 +78,9 @@ export class PollDetailComponent implements OnInit, OnDestroy {
   getDeadlineText(): string {
     const deadline = this.poll()?.deadline;
     if (!deadline) return 'No deadline';
-    return new Date(deadline).toLocaleDateString('de-DE', {
+    const date = new Date(deadline);
+    if (isNaN(date.getTime())) return 'No deadline';
+    return date.toLocaleDateString('de-DE', {
       day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit',
     });
   }
