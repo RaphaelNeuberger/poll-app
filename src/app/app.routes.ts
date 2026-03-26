@@ -7,6 +7,12 @@ export const routes: Routes = [
     title: 'PollApp – Surveys',
   },
   {
+    path: 'create',
+    loadComponent: () =>
+      import('./shared/components/create-poll-modal/create-poll-modal.component').then((m) => m.CreatePollModalComponent),
+    title: 'PollApp – New Survey',
+  },
+  {
     path: 'poll/:id',
     loadComponent: () =>
       import('./features/poll-detail/poll-detail.component').then(

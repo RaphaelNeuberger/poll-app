@@ -130,24 +130,4 @@
 
 </div>
 
-<!-- Success overlay -->
-@if (showSuccessOverlay()) {
-  <div class="success-overlay" (click)="closeSuccessOverlay()">
-    <div class="success-overlay__box">
-      <div class="success-overlay__row">
-        <p class="success-overlay__text">Your survey was created successfully!</p>
-        <button class="success-overlay__close" type="button" (click)="closeSuccessOverlay()" aria-label="Close">
-          <img src="close.png" alt="close" style="width:24px;height:24px;">
-        </button>
-      </div>
-    </div>
-  </div>
-}
 
-<!-- Create poll modal dialog -->
-@if (showCreateModal()) {
-  <app-create-poll-modal
-    (closed)="closeCreateModal()"
-    (pollCreated)="onPollCreated($event)"
-  ></app-create-poll-modal>
-}

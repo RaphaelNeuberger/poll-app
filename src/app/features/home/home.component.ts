@@ -5,11 +5,10 @@ import { PollService } from '../../core/services/poll.service';
 import { Poll, PollTab } from '../../core/models/poll.model';
 import { PollCardComponent } from '../../shared/components/poll-card/poll-card.component';
 import { UrgentPollsComponent } from '../../shared/components/urgent-polls/urgent-polls.component';
-import { CreatePollModalComponent } from '../../shared/components/create-poll-modal/create-poll-modal.component';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, PollCardComponent, UrgentPollsComponent, CreatePollModalComponent],
+  imports: [CommonModule, PollCardComponent, UrgentPollsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -18,11 +17,8 @@ export class HomeComponent implements OnInit {
   readonly selectedCategory = signal<string | null>(null);
   readonly showCategoryMenu = signal(false);
   readonly categories = ['Team Activities', 'Health & Wellness', 'Gaming & Entertainment', 'Education & Learning', 'Lifestyle & Preferences', 'Technology & Innovation'];
-  readonly showCreateModal = signal(false);
   readonly isIllustrationHovered = signal(false);
   readonly isCtaHovered = signal(false);
-  readonly showSuccessOverlay = signal(false);
-  createdPollId: string | null = null;
 
   constructor(
     readonly pollService: PollService,
@@ -56,26 +52,9 @@ export class HomeComponent implements OnInit {
   switchTab(tab: PollTab): void {
     this.activeTab.set(tab);
   }
-  /** Opens the create survey modal. */
+  /** Navigates to the create survey page. */
   openCreateModal(): void {
-    this.showCreateModal.set(true);
-  }
-  /** Closes the create survey modal without saving. */
-  closeCreateModal(): void {
-    this.showCreateModal.set(false);
-  }
-  /** Shows the success overlay once a poll has been saved. */
-  onPollCreated(pollId: string): void {
-    this.createdPollId = pollId;
-    this.showCreateModal.set(false);
-    this.showSuccessOverlay.set(true);
-  }
-  /** Closes the overlay and navigates directly to the new poll. */
-  closeSuccessOverlay(): void {
-    this.showSuccessOverlay.set(false);
-    if (this.createdPollId) {
-      this.router.navigate(['/poll', this.createdPollId]);
-    }
+    this.router.navigate(['/create']);
   }
   /** Navigates to the detail page of the given poll. */
   navigateToPoll(poll: Poll): void {

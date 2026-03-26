@@ -1,7 +1,7 @@
-import { Component, Output, EventEmitter, signal, OnInit, OnDestroy } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { PollService } from '../../../core/services/poll.service';
 import { CreatePollData } from '../../../core/models/poll.model';
 
@@ -18,10 +18,7 @@ interface QuestionDraft {
   templateUrl: './create-poll-modal.component.html',
   styleUrl: './create-poll-modal.component.scss',
 })
-export class CreatePollModalComponent implements OnInit, OnDestroy {
-  @Output() closed = new EventEmitter<void>();
-  @Output() pollCreated = new EventEmitter<string>();
-
+export class CreatePollModalComponent {
   title = '';
   description = '';
   deadline = '';
@@ -40,15 +37,7 @@ export class CreatePollModalComponent implements OnInit, OnDestroy {
   isSubmitting = signal(false);
   errorMessage = signal<string | null>(null);
 
-  constructor(private readonly pollService: PollService) {}
-
-  ngOnInit(): void {
-    document.body.classList.add('modal-open');
-  }
-
-  ngOnDestroy(): void {
-    document.body.classList.remove('modal-open');
-  }
+  constructor(private readonly pollService: PollService, private readonly router: Router) {}
 
   /** Appends a new empty question with two default answer slots. */
   addQuestion(): void {
@@ -123,8 +112,7 @@ export class CreatePollModalComponent implements OnInit, OnDestroy {
     const result = await this.pollService.createPoll(data);
 
     if (result) {
-      this.pollCreated.emit(result.id);
-      this.closed.emit();
+      this.router.navigate(['/poll', result.id]);
     } else {
       this.errorMessage.set('Failed to create poll. Please try again.');
     }
@@ -132,9 +120,9 @@ export class CreatePollModalComponent implements OnInit, OnDestroy {
     this.isSubmitting.set(false);
   }
 
-  /** Emits the closed event to let the parent unmount this modal. */
+  /** Navigates back to the home page. */
   handleClose(): void {
-    this.closed.emit();
+    this.router.navigate(['/']);
   }
 
   /** Prevents clicks inside the modal from bubbling up to the backdrop. */
