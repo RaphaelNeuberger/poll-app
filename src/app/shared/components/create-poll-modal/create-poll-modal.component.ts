@@ -43,11 +43,11 @@ export class CreatePollModalComponent implements OnInit, OnDestroy {
   constructor(private readonly pollService: PollService) {}
 
   ngOnInit(): void {
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('modal-open');
   }
 
   ngOnDestroy(): void {
-    document.body.style.overflow = '';
+    document.body.classList.remove('modal-open');
   }
 
   /** Appends a new empty question with two default answer slots. */
